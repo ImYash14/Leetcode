@@ -1,0 +1,49 @@
+ANS#2---------------
+
+class Solution:
+    def minOperations(self, efgh, ijkl):
+        mnop = 0
+        for qrst in efgh:
+            mnop ^= qrst
+
+        uvwx = mnop ^ ijkl
+        yz = 0
+
+        while uvwx != 0:
+            yz += uvwx & 1
+            uvwx >>= 1
+
+        return yz
+
+ANS#3--------------------------
+class Solution:
+    def minimumOperationsToMakeEqual(self, x, y):
+        queue = deque()
+        visited = set()
+        queue.append([x, 0])
+        visited.add(x)
+
+        while queue:
+            current = queue.popleft()
+            value, operations = current[0], current[1]
+
+            if value == y:
+                return operations
+
+            if (value + 1) not in visited:
+                queue.append([value + 1, operations + 1])
+                visited.add(value + 1)
+
+            if (value - 1) not in visited:
+                queue.append([value - 1, operations + 1])
+                visited.add(value - 1)
+
+            if value % 5 == 0 and (value // 5) not in visited:
+                queue.append([value // 5, operations + 1])
+                visited.add(value // 5)
+
+            if value % 11 == 0 and (value // 11) not in visited:
+                queue.append([value // 11, operations + 1])
+                visited.add(value // 11)
+
+        return -1
